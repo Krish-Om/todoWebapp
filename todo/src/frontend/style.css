@@ -1,0 +1,60 @@
+* 
+{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+body 
+{
+    background-image: url("img/bg.jpg");
+    
+}
+.todo 
+{
+    margin: auto;
+    background:rgba(255, 255, 255, 0.192) ;
+    padding: 10px;
+    text-align: center;
+    width: 700px;
+    margin-top: 150px;
+    height: 50vh;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+h2 
+{
+    color: white;
+    font-size: 33px;
+    margin-bottom: 50px;
+    margin-top: 5px;
+}
+.flex 
+{
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+input[name] 
+{
+    padding: 5px;
+    width: 500px;
+    border: 1px solid ;
+    border-radius: 3px;
+}
+a 
+{
+    color: red;
+    position: relative;
+    bottom: 0px;
+    top: 200px;
+    text-decoration: none;
+}
+button 
+{
+    padding: 5px;
+    background: #000;
+}
+i 
+{
+    color: white;
+}
