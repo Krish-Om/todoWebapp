@@ -23,14 +23,14 @@ public class todoController {
         return tasks;
     }
 
-    @DeleteMapping("allTask/deleteTask{taskid}")
+    @DeleteMapping("/allTask/deleteTask{taskid}")
     public ResponseEntity<String> deleteTask(@PathVariable int TaskId)
     {
         if(todorepo.existsById(TaskId)){
             todorepo.deleteById(TaskId);
-            return new ResponseEntity<>("task deleted Succesfully", HttpStatus.OK);
+            return new ResponseEntity<String>("task deleted Succesfully", HttpStatus.OK);
         }else{
-            return new ResponseEntity<>("Task not found to be deletd", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>("Task not found to be deletd", HttpStatus.NOT_FOUND);
         }
     }
 
