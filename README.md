@@ -8,6 +8,7 @@ Before running the application, make sure you have the following installed:
 
 - Java Development Kit (JDK)
 - Maven
+- MySQL
 
 ## Getting Started
 
