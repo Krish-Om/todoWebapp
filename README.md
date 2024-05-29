@@ -1,7 +1,3 @@
-# A simple web-page demonstrating CRUD operations through backend.
-
-## A hard coded Java Spring Boot application(API) for demonstrating simple CRUD operation and communicating with JS and displaying the data in a web simple web-page.
-
 # Todo App
 
 This is a simple web application that demonstrates CRUD operations through a backend API. It is built using Java Spring Boot and communicates with JavaScript to display the data on a web page.
