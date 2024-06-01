@@ -13,7 +13,7 @@ public class corsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**");//enables cors mapping for whole applications.
-                //it applies all to the endpoints
+                //it applies to all the endpoints
             }
         };
     }
