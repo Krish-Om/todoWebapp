@@ -5,8 +5,8 @@
 }
 
 body {
-    background-image: url("todo/src/frontend/img/bg.jpg");
-
+    /* background-image: url(""); */
+    background-color: #000000;
 }
 
 .todo {
