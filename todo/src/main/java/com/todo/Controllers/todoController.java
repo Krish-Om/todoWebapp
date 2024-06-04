@@ -1,10 +1,15 @@
 package com.todo.Controllers;
 
-import com.todo.Repositories.todoRepo;
+import com.todo.Repositories.todoService;
 import com.todo.entity.Task;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+// import java.util.Optional;
+
+// import org.aspectj.apache.bcel.generic.RET;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.*;
@@ -14,36 +19,51 @@ import org.springframework.http.*;
 public class todoController {
 
     @Autowired
-    private todoRepo todorepo;
+    private todoService todoservice;
 
     @PostMapping(path = "/addTask")
-    public @ResponseBody Task addTasks(@RequestParam String taskDetail){
-        System.out.println("Received taskdetail: " + taskDetail);
-        Task tasks = new Task();
-        tasks.setTaskDetail(taskDetail);
-        tasks.setIsCompleted(false);
-        todorepo.save(tasks);
-        return tasks;
+    public ResponseEntity<Task> addTasks(@RequestBody Task task) {
+        System.out.println("Received taskdetail: " + task);
+        Task receivedTask =task;
+        receivedTask.setIsCompleted(false);
+         Task savedTask = todoservice.save(receivedTask);
+         return new ResponseEntity<>(savedTask, HttpStatus.CREATED);
+         
+        }
+
+    @PatchMapping(path = "/updateTask/{id}")
+    public ResponseEntity<Task> updateTask(@PathVariable("id") Integer taskId,@RequestBody Task task){
+        if(!(todoservice.existsById(taskId))){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        task.setId(taskId);
+        Task savedTask = todoservice.partialUpdate(taskId,task);
+        return new ResponseEntity<Task>(savedTask, HttpStatus.OK);
     }
 
-    @DeleteMapping("/allTask/delete{taskid}")
-    public ResponseEntity<String> deleteTask(@PathVariable int TaskId)
-    {
-        if(todorepo.existsById(TaskId)){
-            todorepo.deleteById(TaskId);
+    @DeleteMapping("/allTask/delete/{taskid}")
+    public ResponseEntity<String> deleteTask(@PathVariable("taskid") Integer taskId) {
+        if (todoservice.existsById(taskId)) {
+            todoservice.deleteById(taskId);
             return new ResponseEntity<String>("task deleted Succesfully", HttpStatus.OK);
-        }else{
-            return new ResponseEntity<String>("Task not found to be deletd", HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<String>("Task not found ", HttpStatus.NOT_FOUND);
         }
     }
 
-    @GetMapping(path ="/allTask")
-    public @ResponseBody Iterable<Task> getAllTask(){
-        return todorepo.findAll();
+    @GetMapping("/allTask/{id}")
+    public ResponseEntity<Task> getTaskById(@PathVariable("id") Integer taskId) {
+        if(!todoservice.existsById(taskId)){
+            return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
+        }
+        Optional<Task> foundTask = todoservice.findOne(taskId);
+        return new ResponseEntity<Task>(foundTask.get(),HttpStatus.OK);//the '.get() returns the non-null value'
     }
 
-    @GetMapping("/allTask/{id}")
-    public @ResponseBody Optional<Task> getTaskById(@PathVariable("id") Integer taskId){
-            return todorepo.findById(taskId);
+    @GetMapping(path = "/allTask")
+    public List<Task> getAllTask(){
+        List<Task> tasks = todoservice.findAll();
+        return tasks.stream()
+        .collect(Collectors.toList());
     }
 }
