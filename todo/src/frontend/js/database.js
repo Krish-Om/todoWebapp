@@ -3,46 +3,55 @@ const endpoint = 'http://localhost:8080';
 
 
 let fetchDataMap = new Map();
-// let taskDetail = [], isCompleted = [];
 async function getAllTaskFromDatabase() {
     // const url = `${endpoint}/allTask`;
     const url = endpoint + '/allTask';
-    let response = await fetch(url);
-    if (checkResponseCode(response.status)) {
+    let response;
+    try {
+        response = await fetch(url);
+        if (!checkResponseCode(response.status)) {
+            throw new Error(`Request failed with status code ${response.status}`);
+        }
         let data = await response.json();
         data.forEach(element => {
             const todo = new Todo(element['taskDetail'], element['isCompleted']);
-            // taskDetail.push(element['taskDetail'])
-            // isCompleted.push(element['isCompleted'])
-            // console.log(element['id'],todo)
             fetchDataMap.set(element['id'], todo);
         })
-        // console.log(fetchDataMap);
         return fetchDataMap;
+        // console.log(fetchDataMap);
+    } catch(error) {
+        throw new Error(`Request failed with : ${error.message}}`);
     }
 }
 async function getTasksByTaskId(id) {
     const url = `${endpoint}/allTask/${id}`;
-    let response = await fetch(url);
-    if (checkResponseCode(response.status)) {
+    let response;
+    try {
+        response = await fetch(url);
         let data = await response.json();
         console.log(response.status);
+        if (!checkResponseCode(response.status)) {
+            throw new Error(`Request failed with status code ${response.status}`);
+        }
         return data;
-    } else if (response.status === 404) {
-        console.log("Task not found")
-    } else {
-        console.error("Something went wrong");
+    }
+    catch(error) {
+        throw new Error(`Request failed with: ${error.message}`);
     }
 }
 async function deleteTask(id) {
     const url = `${endpoint}/allTask/delete/${id}`;
-    let response = await fetch(url, {
-        method: 'DELETE'
-    })
-    if ((checkResponseCode(response.status))) {
+    let response;
+    try {
+        response = await fetch(url, {method: 'DELETE'})
+        if(!checkResponseCode(response.status))
+            {
+                throw new Error('Request failed');
+            }
         return response;
-    } else {
-        return response;
+    } catch(error) {
+        throw new Error(`Request failed ${error.message}`);
+
     }
 }
 
@@ -57,43 +66,46 @@ async function addTask(task) {
             'Content-Type': 'application/json'
         }
     }
-    let response = await fetch(url,option);
-    if(response.status === 201){
-        console.log("Succesfully created!");
+    let response;
+    try {
+        response = await fetch(url, option);
+        if(!checkResponseCode(response.status)){
+            throw new Error("Request Failed");
+        }
         return response;
-    }else{
-        console.log("Something went wrong");
-        return response;
+    } catch (error) {
+        throw new Error(`Request failed: ${error.message}`);
     }
 }
 
-async function updateStatus(id){
+async function updateStatus(id) {
     const url = `${endpoint}/updateTask/${id}`
-    const completeStatus={'isCompleted':true};
+    const completeStatus = { 'isCompleted': true };
     const option = {
-        method :'PATCH',
-        body : JSON.stringify(completeStatus),
-        headers:{
-            'Content-type':'application/json'
+        method: 'PATCH',
+        body: JSON.stringify(completeStatus),
+        headers: {
+            'Content-type': 'application/json'
         }
     }
-    let response = await fetch(url,option);
-    if(checkResponseCode(response.status)){
-        // console.log("Status is updated to true for task "+id);
+    let response;
+    try {
+        response = await fetch(url, option);
+        if(!checkResponseCode(response.status)){
+            throw new Error(`Request failed`);
+        }
         return response;
-    }else{
-        return response;
+    } catch(error) {
+        throw new Error(`Request failed: ${error.message}` );
     }
-
 }
 
 function checkResponseCode(statusCode) {
-    if (Number(statusCode) === 200) {
-        return true;
-    } else {
-        return false;
-    }
+    return statusCode >= 200 && statusCode < 300;
 }
+
 // addTask();
-updateStatus(11);
-export { deleteTask, getAllTaskFromDatabase, getTasksByTaskId, addTask,updateStatus };
+getAllTaskFromDatabase();
+// updateStatus(3);
+
+export { deleteTask, getAllTaskFromDatabase, getTasksByTaskId, addTask, updateStatus };

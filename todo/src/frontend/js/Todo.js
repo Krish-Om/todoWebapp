@@ -49,8 +49,8 @@ async function useUpdateStatus(id){
     }
 }
 
-useUpdateStatus(13);
+// useUpdateStatus(13);
 // useDeleteById();
 // // console.log(res);
-// useAllTaskData();
+useAllTaskData();
 // useTaskById();
