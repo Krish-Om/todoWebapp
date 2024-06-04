@@ -1,51 +1,29 @@
-let obj;
-// async function getTaskFromDatabase() {
-//     let raw  = await fetch(`http://localhost:8080/allTask`);
-//     let data = await raw.json();
-//     // console.log(data);
-//     data.forEach(element => {
-//         obj.push(element);
-//     });
-//     // obj = data;
-// }
-// // getTaskFromDatabase();
-// console.log(obj);
-// setTimeout(()=>{
-//     const data = getTaskFromDatabase();
-
-//     console.log( data);
-// },2000);
-const endpoint = 'http://localhost:8080/allTask';
-
-// let promise = fetch(endpoint);
-// console.log(promise);
+import { Todo } from "./Todo.js";
+const endpoint = 'http://localhost:8080';
 
 
-const getTaskFromDatabase = async ()=>{
-    // console.log("getting data");
-    let response = await fetch(endpoint);
+let fetchDataMap = new Map();
+// let taskDetail = [], isCompleted = [];
+async function getAllTaskFromDatabase() {
+    // const url = `${endpoint}/allTask`;
+    const url = endpoint+'/allTask';
+    let response = await fetch(url);
     let data = await response.json();
-    // obj = [...data];
-    console.log(data);
-    console.log(data[0].taskDetail);
+    data.forEach(element => {
+        const todo = new Todo(element['taskDetail'],element['isCompleted']);
+        // taskDetail.push(element['taskDetail'])
+        // isCompleted.push(element['isCompleted'])
+        // console.log(element['id'],todo)
+        fetchDataMap.set(element['id'],todo);
+    })
+        // console.log(fetchDataMap);
+    return fetchDataMap;
 }
-getTaskFromDatabase();
+async function getTasksByTaskId(id){
+    const url = `${endpoint}/allTask/${id}`;
+    let response = await fetch(url);
+    let data = await response.json();
+    return data;
+}
 
-
-
-
-
-
-
-// console.log(obj);
-// fetch(endpoint,{
-//     method:"GET",
-// })
-// .then(responseBody =>
-//     { responseBody.json;})
-// .then((data) => {
-//     console.log('Data from db',data)})
-
-// .catch(error => {
-// console.error('fetch error: ',error);
-// })
+export {getAllTaskFromDatabase,getTasksByTaskId};

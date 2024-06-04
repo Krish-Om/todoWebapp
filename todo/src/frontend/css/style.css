@@ -63,3 +63,6 @@ i {
 #allTasks{
     position: relative;
 }
+#myBtn p{
+    color: antiquewhite;
+}

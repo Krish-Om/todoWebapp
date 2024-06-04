@@ -2,6 +2,9 @@ package com.todo.Controllers;
 
 import com.todo.Repositories.todoRepo;
 import com.todo.entity.Task;
+
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.*;
@@ -23,7 +26,7 @@ public class todoController {
         return tasks;
     }
 
-    @DeleteMapping("/allTask/deleteTask{taskid}")
+    @DeleteMapping("/allTask/delete{taskid}")
     public ResponseEntity<String> deleteTask(@PathVariable int TaskId)
     {
         if(todorepo.existsById(TaskId)){
@@ -39,5 +42,8 @@ public class todoController {
         return todorepo.findAll();
     }
 
-
+    @GetMapping("/allTask/{id}")
+    public @ResponseBody Optional<Task> getTaskById(@PathVariable("id") Integer taskId){
+            return todorepo.findById(taskId);
+    }
 }
