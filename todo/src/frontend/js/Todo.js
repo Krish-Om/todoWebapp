@@ -48,9 +48,3 @@ async function useUpdateStatus(id){
         console.log("successfully updated the status of task to completed");
     }
 }
-
-// useUpdateStatus(13);
-// useDeleteById();
-// // console.log(res);
-useAllTaskData();
-// useTaskById();
