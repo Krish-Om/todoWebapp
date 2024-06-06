@@ -1,68 +1,36 @@
-* {
-    margin: 0px;
-    padding: 0px;
+body{
+    margin: 0;
+    padding: 0;
+}
+*{
     box-sizing: border-box;
 }
-
-body {
-    /* background-image: url(""); */
-    background-color: #000000;
+.wrapper{
+background: url('./assets/a.jpg') no-repeat center;
+background-size:cover ;
+min-height: 100vh;
 }
-
-.todo {
-    margin: auto;
-    background: rgba(255, 255, 255, 0.192);
-    padding: 10px;
-    text-align: center;
-    width: 700px;
-    margin-top: 150px;
-    height: 50vh;
-    border: 1px solid white;
-    border-radius: 10px;
+.to-do{
+background: rgba(255, 255, 255, 0.284);
 }
-
-h2 {
-    color: white;
-    font-size: 33px;
-    margin-bottom: 50px;
-    margin-top: 5px;
+.table{
+    --bs-table-bg:transparent ;
 }
-
-.flex {
-    display: flex;
-    justify-content: center;
-    gap: 5px;
+.clearitem{
+    top: 520px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-decoration: underline;
+    font-size: 20px;
 }
-
-input[name] {
-    padding: 5px;
-    width: 500px;
-    border: 1px solid;
-    border-radius: 3px;
+.clearitem:hover{
+    cursor: pointer;
+    color: rgb(110, 6, 18) !important;
 }
-
-a {
-    color: red;
-    position: relative;
-    bottom: 0px;
-    top: 200px;
-    text-decoration: none;
+.green{
+    background: green;
+    border: 1px green;
 }
-
-button {
-    padding: 5px;
-    background: #000;
-}
-
-i {
-    color: white;
-}
-#clear{
-    position: relative;
-}
-#allTasks{
-    position: relative;
-}
-#myBtn p{
-    color: white;
+.green:hover{
+    background: green !important;
 }
