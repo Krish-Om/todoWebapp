@@ -6,7 +6,7 @@ body{
     box-sizing: border-box;
 }
 .wrapper{
-background: url('./assets/a.jpg') no-repeat center;
+background: url('/todo//src/frontend/img/a.jpg') no-repeat center;
 background-size:cover ;
 min-height: 100vh;
 }
