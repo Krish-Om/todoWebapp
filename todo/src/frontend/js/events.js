@@ -1,4 +1,3 @@
-
 let taskList = []
 
 const dayArr = ["sunday", "Monday", "Tuesday", "Wednesday", "Thusday", "Friday", "Saturday"]
