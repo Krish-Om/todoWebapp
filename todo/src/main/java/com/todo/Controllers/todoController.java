@@ -21,7 +21,7 @@ public class todoController {
     @Autowired
     private todoService todoservice;
 
-    @PostMapping(path = "/addTask")
+    @PostMapping(path = "/task")
     public ResponseEntity<Task> addTasks(@RequestBody Task task) {
         System.out.println("Received taskdetail: " + task);
         Task receivedTask =task;
@@ -31,7 +31,7 @@ public class todoController {
          
         }
 
-    @PatchMapping(path = "/updateTask/{id}")
+    @PatchMapping(path = "/task/{id}")
     public ResponseEntity<Task> updateTask(@PathVariable("id") Integer taskId,@RequestBody Task task){
         if(!(todoservice.existsById(taskId))){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -41,7 +41,7 @@ public class todoController {
         return new ResponseEntity<Task>(savedTask, HttpStatus.OK);
     }
 
-    @DeleteMapping("/allTask/delete/{taskid}")
+    @DeleteMapping("/task/{taskid}")
     public ResponseEntity<String> deleteTask(@PathVariable("taskid") Integer taskId) {
         if (todoservice.existsById(taskId)) {
             todoservice.deleteById(taskId);
@@ -51,7 +51,7 @@ public class todoController {
         }
     }
 
-    @GetMapping("/allTask/{id}")
+    @GetMapping("/task/{id}")
     public ResponseEntity<Task> getTaskById(@PathVariable("id") Integer taskId) {
         if(!todoservice.existsById(taskId)){
             return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
@@ -60,7 +60,7 @@ public class todoController {
         return new ResponseEntity<Task>(foundTask.get(),HttpStatus.OK);//the '.get() returns the non-null value'
     }
 
-    @GetMapping(path = "/allTask")
+    @GetMapping(path = "/task")
     public List<Task> getAllTask(){
         List<Task> tasks = todoservice.findAll();
         return tasks.stream()

@@ -1,8 +1,8 @@
-import  * as database from './database.js';
+import  * as database from './databaseController.js';
 
-export {Todo};
+export {Task};
 
-class Todo {
+class Task {
     constructor(taskDetail,isCompleted){
         this.taskDetail=taskDetail;
         this.isCompleted=isCompleted;
@@ -12,7 +12,7 @@ class Todo {
 let taskDetail = "Say hello to the server!";
 // let isCompleted = false;
 async function useAddTask(){
-    const task = new Todo(taskDetail);
+    const task = new Task(taskDetail);
     await database.addTask(task).then(async (response)=>{
         let responseData = await response.json()
         console.log("Created:\n ",responseData);
@@ -27,9 +27,11 @@ async function useAllTaskData(){
     console.log(res)
 }
 
-async function useTaskById(){
-    let res = await database.getTasksByTaskId(1)
+async function useTaskById(id){
+    let res = await database.getTasksByTaskId(id)
     .catch(error =>console.error(error))
+
+    return res;
 }
 
 async function useDeleteById(){
@@ -48,3 +50,5 @@ async function useUpdateStatus(id){
         console.log("successfully updated the status of task to completed");
     }
 }
+
+

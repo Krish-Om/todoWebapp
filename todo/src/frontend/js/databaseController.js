@@ -1,11 +1,11 @@
-import { Todo } from "./Todo.js";
+import { Task } from "./task.js";
 const endpoint = 'http://localhost:8080';
 
 
 let fetchDataMap = new Map();
 async function getAllTaskFromDatabase() {
     // const url = `${endpoint}/allTask`;
-    const url = endpoint + '/allTask';
+    const url = endpoint + '/task';
     let response;
     try {
         response = await fetch(url);
@@ -14,7 +14,7 @@ async function getAllTaskFromDatabase() {
         }
         let data = await response.json();
         data.forEach(element => {
-            const todo = new Todo(element['taskDetail'], element['isCompleted']);
+            const todo = new Task(element['taskDetail'], element['isCompleted']);
             fetchDataMap.set(element['id'], todo);
         })
         return fetchDataMap;
@@ -24,7 +24,7 @@ async function getAllTaskFromDatabase() {
     }
 }
 async function getTasksByTaskId(id) {
-    const url = `${endpoint}/allTask/${id}`;
+    const url = `${endpoint}/task/${id}`;
     let response;
     try {
         response = await fetch(url);
@@ -40,7 +40,7 @@ async function getTasksByTaskId(id) {
     }
 }
 async function deleteTask(id) {
-    const url = `${endpoint}/allTask/delete/${id}`;
+    const url = `${endpoint}/task/${id}`;
     let response;
     try {
         response = await fetch(url, {method: 'DELETE'})
@@ -55,10 +55,10 @@ async function deleteTask(id) {
     }
 }
 
-// let task = new Todo("Hello from Javascript",false);
+// let task = new TodoImpl("Hello from Javascript",false);
 
 async function addTask(task) {
-    const url = `${endpoint}/addTask`;
+    const url = `${endpoint}/task`;
     const option = {
         method: "POST",
         body: JSON.stringify(task),
@@ -79,7 +79,7 @@ async function addTask(task) {
 }
 
 async function updateStatus(id) {
-    const url = `${endpoint}/updateTask/${id}`
+    const url = `${endpoint}/task/${id}`
     const completeStatus = { 'isCompleted': true };
     const option = {
         method: 'PATCH',
@@ -103,9 +103,5 @@ async function updateStatus(id) {
 function checkResponseCode(statusCode) {
     return statusCode >= 200 && statusCode < 300;
 }
-
-// addTask();
-getAllTaskFromDatabase();
-// updateStatus(3);
 
 export { deleteTask, getAllTaskFromDatabase, getTasksByTaskId, addTask, updateStatus };
