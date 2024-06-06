@@ -13,11 +13,12 @@ async function getAllTaskFromDatabase() {
             throw new Error(`Request failed with status code ${response.status}`);
         }
         let data = await response.json();
-        data.forEach(element => {
-            const todo = new Task(element['taskDetail'], element['isCompleted']);
-            fetchDataMap.set(element['id'], todo);
-        })
-        return fetchDataMap;
+        // data.forEach(element => {
+        //     const todo = new Task(element['taskDetail'], element['isCompleted']);
+        //     fetchDataMap.set(element['id'], todo);
+        // })
+        // return fetchDataMap;
+        return data;
         // console.log(fetchDataMap);
     } catch(error) {
         throw new Error(`Request failed with : ${error.message}}`);
