@@ -26,6 +26,7 @@ async function useAllTaskData(){
     });
     console.log(res)
 }
+useAllTaskData()
 
 async function useTaskById(id){
     let res = await database.getTasksByTaskId(id)
