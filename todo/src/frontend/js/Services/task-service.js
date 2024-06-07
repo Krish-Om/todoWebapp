@@ -1,8 +1,8 @@
-import { Task } from "./task.js";
-const endpoint = 'http://localhost:8080';
+import { endpoint } from "../config.js";
 
 
-let fetchDataMap = new Map();
+
+
 async function getAllTaskFromDatabase() {
     // const url = `${endpoint}/allTask`;
     const url = endpoint + '/task';
@@ -12,15 +12,8 @@ async function getAllTaskFromDatabase() {
         if (!checkResponseCode(response.status)) {
             throw new Error(`Request failed with status code ${response.status}`);
         }
-        let data = await response.json();
-        // data.forEach(element => {
-        //     const todo = new Task(element['taskDetail'], element['isCompleted']);
-        //     fetchDataMap.set(element['id'], todo);
-        // })
-        // return fetchDataMap;
-        return data;
-        // console.log(fetchDataMap);
-    } catch(error) {
+        return response.json();
+    } catch (error) {
         throw new Error(`Request failed with : ${error.message}}`);
     }
 }
@@ -29,31 +22,46 @@ async function getTasksByTaskId(id) {
     let response;
     try {
         response = await fetch(url);
-        let data = await response.json();
-        console.log(response.status);
+        // console.log(response.status);
         if (!checkResponseCode(response.status)) {
             throw new Error(`Request failed with status code ${response.status}`);
         }
-        return data;
+        return response.json();
     }
-    catch(error) {
+    catch (error) {
         throw new Error(`Request failed with: ${error.message}`);
     }
 }
-async function deleteTask(id) {
-    const url = `${endpoint}/task/${id}`;
-    let response;
-    try {
-        response = await fetch(url, {method: 'DELETE'})
-        if(!checkResponseCode(response.status))
-            {
-                throw new Error('Request failed');
-            }
-        return response;
-    } catch(error) {
-        throw new Error(`Request failed ${error.message}`);
 
-    }
+// setTimeout(async()=>{
+//     console.log("await")
+//     console.log(await  getTasksByTaskId(1));
+    
+//   },5000)
+
+//   getTasksByTaskId(1).then(res=>{
+//     console.log("promise")
+//     console.log(res)
+//   })
+
+function deleteTask(id) {
+    const url = `${endpoint}/task/${id}`;
+
+    return new Promise(async (resolve, reject) => {
+        try {
+            let response;
+            response = await fetch(url, { method: 'DELETE' })
+            if (!checkResponseCode(response.status)) {
+                reject('Request failed')
+            }
+            resolve(response)
+        } catch (error) {
+            reject(`Request failed ${error.message}`)
+
+
+        }
+    })
+
 }
 
 // let task = new TodoImpl("Hello from Javascript",false);
@@ -70,7 +78,7 @@ async function addTask(task) {
     let response;
     try {
         response = await fetch(url, option);
-        if(!checkResponseCode(response.status)){
+        if (!checkResponseCode(response.status)) {
             throw new Error("Request Failed");
         }
         return response;
@@ -92,17 +100,18 @@ async function updateStatus(id) {
     let response;
     try {
         response = await fetch(url, option);
-        if(!checkResponseCode(response.status)){
+        if (!checkResponseCode(response.status)) {
             throw new Error(`Request failed`);
         }
         return response;
-    } catch(error) {
-        throw new Error(`Request failed: ${error.message}` );
+    } catch (error) {
+        throw new Error(`Request failed: ${error.message}`);
     }
 }
 
 function checkResponseCode(statusCode) {
     return statusCode >= 200 && statusCode < 300;
 }
+getAllTaskFromDatabase();
 
 export { deleteTask, getAllTaskFromDatabase, getTasksByTaskId, addTask, updateStatus };

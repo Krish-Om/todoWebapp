@@ -17,7 +17,6 @@ import org.springframework.http.*;
 @RestController
 @RequestMapping("/")
 public class todoController {
-
     @Autowired
     private todoService todoservice;
 
@@ -52,9 +51,10 @@ public class todoController {
     }
 
     @GetMapping("/task/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable("id") Integer taskId) {
+    public ResponseEntity<?> getTaskById(@PathVariable("id") Integer taskId) {
         if(!todoservice.existsById(taskId)){
-            return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
+            
+            return new ResponseEntity<String>("Not Found",HttpStatus.NOT_FOUND);
         }
         Optional<Task> foundTask = todoservice.findOne(taskId);
         return new ResponseEntity<Task>(foundTask.get(),HttpStatus.OK);//the '.get() returns the non-null value'

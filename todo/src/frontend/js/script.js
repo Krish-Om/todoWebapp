@@ -1,3 +1,70 @@
+const fetchAll=()=>{
+    fetch('http://localhost:8080/task').then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(results => {
+        console.log(results);
+        // taskList=results
+        displayTaskList(results)
+      })
+}
+const fetchOne=(id)=>{
+    fetch('http://localhost:8080/task').then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(results => {
+        console.log(results);
+        // taskList=results
+        displayTaskList(results)
+      })
+}
+
+const destroy=(id)=>{
+    fetch('http://localhost:8080/task').then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(results => {
+        console.log(results);
+        // taskList=results
+        displayTaskList(results)
+      })
+}
+
+const create=()=>{
+    fetch('http://localhost:8080/task').then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(results => {
+        console.log(results);
+        // taskList=results
+        displayTaskList(results)
+      })
+}
+const update=(id)=>{
+    fetch('http://localhost:8080/task').then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(results => {
+        console.log(results);
+        // taskList=results
+        displayTaskList(results)
+      })
+}
 let taskList = []
 
 const dayArr = ["sunday", "Monday", "Tuesday", "Wednesday", "Thusday", "Friday", "Saturday"]
@@ -32,7 +99,7 @@ let sec = date.getSeconds()
 if(sec< 10){
     sec = "0" + sec;
 }
-// console.log(hr + ":" + min + ":" + sec)
+console.log(hr + ":" + min + ":" + sec)
     document.querySelector(".time").innerText = hr + ":" + min + ":" + sec + " " + period;
 }
 updateDay()
@@ -54,30 +121,27 @@ const handleOnSubmit = (e) =>{
         completed: false,
     }
     taskList.push(obj)
-    // console.log(taskList)
+    console.log(taskList)
     displayTaskList()
 }
 
-const displayTaskList = () =>{
+const displayTaskList = (results) =>{
     let str = ''
     const tableList = document.querySelector(".tableList");
 
-    
-    taskList.map((item, i)=>{
+    results.map((item, i)=>{
         str += `
         <tr>
         <td>${i + 1}</td>
-        <td>${item.task}</td>
+        <td>${item.taskDetail}</td>
         <td class="text-end">
             <button onclick = handleOnDel("${item.id}") class="btn btn-danger"><i class="bi bi-trash3"></i></button>
             <button onclick="toggleTaskCompletion('${item.id}')" class="btn ${item.completed ? 'btn-success' : 'btn-primary'} mark"><i class="bi bi-check2"></i></button>
         </td>
         </tr>`
-        
     })
     tableList.innerHTML = str;
 }
-
 
 const handleOnClear = () =>{
     if(window.confirm("Are you sure you want to delete all the task?"))
@@ -111,4 +175,6 @@ const randomIdGenerator = () =>{
     }
     return id;
 }
-
+(function(){
+    fetchAll()
+})()
