@@ -14,10 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.*;
 
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 @RestController
 @RequestMapping("/")
 public class todoController {
-
     @Autowired
     private todoService todoservice;
 
@@ -50,11 +50,17 @@ public class todoController {
             return new ResponseEntity<String>("Task not found ", HttpStatus.NOT_FOUND);
         }
     }
+    @DeleteMapping("/tasks")
+    public ResponseEntity<String> deleteAll(){
+        todoservice.deleteAll();
+        return new ResponseEntity<String>("All task is deleted",HttpStatus.OK);
+    }
 
     @GetMapping("/task/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable("id") Integer taskId) {
+    public ResponseEntity<?> getTaskById(@PathVariable("id") Integer taskId) {
         if(!todoservice.existsById(taskId)){
-            return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
+            
+            return new ResponseEntity<String>("Not Found",HttpStatus.NOT_FOUND);
         }
         Optional<Task> foundTask = todoservice.findOne(taskId);
         return new ResponseEntity<Task>(foundTask.get(),HttpStatus.OK);//the '.get() returns the non-null value'
