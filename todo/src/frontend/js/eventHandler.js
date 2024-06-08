@@ -18,7 +18,7 @@ const fetchOne = (id) => {
 
 const destroy = (id) => {
   taskService.deleteTask(id).then((res) => {
-    console.log("Deleted succesfully", res);
+    console.log("Deleted succesfully" , id);
   });
 };
 
@@ -87,9 +87,9 @@ const timeDisplay = () => {
     hr + ":" + min + ":" + sec + " " + period;
 };
 
-updateDay();
-timeDisplay();
-setInterval(timeDisplay, 1000);
+  updateDay();
+  timeDisplay();
+  setInterval(timeDisplay, 1000);
 
 const handleOnSubmit = (e) => {
   const newForm = new FormData(e);
@@ -103,11 +103,11 @@ const handleOnSubmit = (e) => {
     ) {
       const obj = {
         taskDetail: task,
-        // id: randomIdGenerator(),
-        // status: false,//default false
+        id: taskList.id,
+        status: false,
       };
       taskList.push(obj);
-      create(obj);
+      create(task);
       displayTaskList(taskList);
     } else {
       throw new Error("Empty task cannot be added");
@@ -124,16 +124,14 @@ const displayTaskList = (results) => {
   let str = "";
   const tableList = document.querySelector(".tableList");
 
-  results.map((item, i) => {
+  results.map((item) => {
+    // console.log(item.id);
     str += `
         <tr>
-        <td>${i + 1}</td>
         <td>${item.taskDetail}</td>
         <td class="text-end">
 
-            <button onclick = handleOnDel("${
-              item.id
-            }") class="btn btn-danger"><i class="bi bi-trash3"></i></button>
+            <button onclick = handleOnDel("${item.id}") class="btn btn-danger"><i class="bi bi-trash3"></i></button>
             <button onclick="toggleTaskCompletion('${item.id}')" class="btn ${
       item.isCompleted ? "btn-success" : "btn-primary"
     } mark"><i class="bi bi-check2"></i></button>
@@ -151,12 +149,15 @@ const handleOnClear = () => {
 
 const handleOnDel = (id) => {
   if (window.confirm("Are you sure you want to delete?")){
-      destroy(id);
+      console.log(`current item id:${id}`);
+      taskList = taskList.filter((item) => {
+        if(item.id == id){
+          console.log(item.id);
+          destroy(item.id);
+        }
+        return item.id !== id;
+      });
   }
-    // taskList = taskList.filter((item) => {
-    //   console.log(`current item id:${item.id}`);
-    //   return item.id !== id;
-    // });
   console.log(`updated task list: `, taskList);
   displayTaskList(taskList);
 };
