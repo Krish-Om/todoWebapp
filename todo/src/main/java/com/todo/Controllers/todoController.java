@@ -50,6 +50,11 @@ public class todoController {
             return new ResponseEntity<String>("Task not found ", HttpStatus.NOT_FOUND);
         }
     }
+    @DeleteMapping("/tasks")
+    public ResponseEntity<String> deleteAll(){
+        todoservice.deleteAll();
+        return new ResponseEntity<String>("All task is deleted",HttpStatus.OK);
+    }
 
     @GetMapping("/task/{id}")
     public ResponseEntity<?> getTaskById(@PathVariable("id") Integer taskId) {

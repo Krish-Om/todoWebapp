@@ -94,8 +94,27 @@ class TaskService{
             throw new Error(`Request failed: ${error.message}`);
         }
     }
+
+    async deleteAll(){
+        
+        const url =`${this.endpoint}/tasks`
+        const option ={
+            method:'DELETE'
+        }
+
+        let response;
+        try {
+            response = await fetch(url,option);
+            if(!this.checkResponseCode(response.status)){
+                throw new Error("Request failed",response.status)
+            }
+            return response;
+        }catch(error){
+            throw new Error(`Request failed`,error.message);
+        }
+    }
     
-     checkResponseCode(statusCode) {
+    checkResponseCode(statusCode) {
         return statusCode >= 200 && statusCode < 300;
     }
 }

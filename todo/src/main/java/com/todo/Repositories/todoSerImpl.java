@@ -54,4 +54,9 @@ public class todoSerImpl implements todoService{
     public Optional<Task> findOne(Integer taskId) {
         return repo.findById(taskId);
     }
+
+    @Override
+    public void deleteAll() {
+        repo.deleteAll();
+    }
 }

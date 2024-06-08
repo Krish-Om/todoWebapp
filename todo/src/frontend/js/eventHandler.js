@@ -22,12 +22,18 @@ const destroy = (id) => {
   });
 };
 
+const destroyAll= ()=>{
+  taskService.deleteAll().then((res)=>{
+    console.log("deleted all");
+  })
+}
+
 const create = (task) => {
   const newtask = {
       taskDetail :task,
       taskStatus :false
   }
-  taskService.addTask(task).then((res) => {
+  taskService.addTask(newtask).then((res) => {
     console.log("created successfully");
   });
 };
@@ -103,7 +109,7 @@ const handleOnSubmit = (e) => {
     ) {
       const obj = {
         taskDetail: task,
-        id: taskList.id,
+        // id: taskList.id,
         status: false,
       };
       taskList.push(obj);
@@ -142,12 +148,17 @@ const displayTaskList = (results) => {
 };
 
 const handleOnClear = () => {
-  if (window.confirm("Are you sure you want to delete all the task?"))
+  if (window.confirm("Are you sure you want to delete all the task?")){
     taskList = [];
-  displayTaskList(taskList);
+    
+    destroyAll();
+    displayTaskList(taskList);
+
+  }
 };
 
 const handleOnDel = (id) => {
+  
   if (window.confirm("Are you sure you want to delete?")){
       console.log(`current item id:${id}`);
       taskList = taskList.filter((item) => {
@@ -163,8 +174,11 @@ const handleOnDel = (id) => {
 };
 
 const toggleTaskCompletion = (id) => {
+  // console.log(id);
   taskList = taskList.map((item) => {
-    if (item.id === id) {
+    if (item.id == id) {
+      console.log(item.id)
+      update(id);
       return { ...item, isCompleted: !item.isCompleted };
     }
     return item;

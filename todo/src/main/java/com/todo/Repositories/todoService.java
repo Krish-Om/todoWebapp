@@ -12,4 +12,5 @@ public interface todoService {
     void deleteById(Integer taskId);
     List<Task> findAll();
     Optional<Task> findOne(Integer taskId);
+    void deleteAll();
 }
