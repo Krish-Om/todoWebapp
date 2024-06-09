@@ -18,21 +18,21 @@ const fetchOne = (id) => {
 
 const destroy = (id) => {
   taskService.deleteTask(id).then((res) => {
-    console.log("Deleted succesfully" , id);
+    console.log("Deleted succesfully", id);
   });
 };
 
-const destroyAll= ()=>{
-  taskService.deleteAll().then((res)=>{
+const destroyAll = () => {
+  taskService.deleteAll().then((res) => {
     console.log("deleted all");
-  })
-}
+  });
+};
 
 const create = (task) => {
   const newtask = {
-      taskDetail :task,
-      taskStatus :false
-  }
+    taskDetail: task,
+    taskStatus: false,
+  };
   taskService.addTask(newtask).then((res) => {
     console.log("created successfully");
   });
@@ -93,9 +93,9 @@ const timeDisplay = () => {
     hr + ":" + min + ":" + sec + " " + period;
 };
 
-  updateDay();
-  timeDisplay();
-  setInterval(timeDisplay, 1000);
+updateDay();
+timeDisplay();
+setInterval(timeDisplay, 1000);
 
 const handleOnSubmit = (e) => {
   const newForm = new FormData(e);
@@ -134,10 +134,13 @@ const displayTaskList = (results) => {
     // console.log(item.id);
     str += `
         <tr>
+        <td>${item.id}
         <td>${item.taskDetail}</td>
         <td class="text-end">
 
-            <button onclick = handleOnDel("${item.id}") class="btn btn-danger"><i class="bi bi-trash3"></i></button>
+            <button onclick = handleOnDel("${
+              item.id
+            }") class="btn btn-danger"><i class="bi bi-trash3"></i></button>
             <button onclick="toggleTaskCompletion('${item.id}')" class="btn ${
       item.isCompleted ? "btn-success" : "btn-primary"
     } mark"><i class="bi bi-check2"></i></button>
@@ -148,37 +151,34 @@ const displayTaskList = (results) => {
 };
 
 const handleOnClear = () => {
-  if (window.confirm("Are you sure you want to delete all the task?")){
+  if (window.confirm("Are you sure you want to delete all the task?")) {
     taskList = [];
-    
+
     destroyAll();
     displayTaskList(taskList);
-
   }
 };
 
 const handleOnDel = (id) => {
-  
-  if (window.confirm("Are you sure you want to delete?")){
-      console.log(`current item id:${id}`);
-      taskList = taskList.filter((item) => {
-        if(item.id == id){
-          console.log(item.id);
-          destroy(item.id);
-        }
-        return item.id !== id;
-      });
+  if (window.confirm("Are you sure you want to delete?")) {
+    // console.log(`current item id:${id}`);
+    taskList = taskList.filter((item) => {
+      if (item.id == id) {
+        destroy(item.id);
+        return false;
+      }
+      return true;
+    });
   }
   console.log(`updated task list: `, taskList);
   displayTaskList(taskList);
 };
 
 const toggleTaskCompletion = (id) => {
-  // console.log(id);
   taskList = taskList.map((item) => {
     if (item.id == id) {
-      console.log(item.id)
       update(id);
+      console.log(item.id)
       return { ...item, isCompleted: !item.isCompleted };
     }
     return item;
