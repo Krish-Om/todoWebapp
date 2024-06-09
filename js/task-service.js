@@ -1,5 +1,5 @@
 class TaskService {
-  endpoint = "http://localhost:8080";
+  endpoint = "https://todowebapp-jhwg.onrender.com";
   async getAllTasks() {
     const url = this.endpoint + "/task";
     let response;
@@ -34,7 +34,6 @@ class TaskService {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://127.0.0.1:5500",
       },
     };
     let response;
