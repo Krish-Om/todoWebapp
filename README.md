@@ -42,11 +42,12 @@ Before running the application, make sure you have the following installed:
 
 The following API endpoints are available:
 
-- `GET /api/todos`: Get all todos
-- `GET /api/todos/{id}`: Get a specific todo by ID
-- `POST /api/todos`: Create a new todo
-- `PUT /api/todos/{id}`: Update an existing todo
-- `DELETE /api/todos/{id}`: Delete a todo
+- `GET /task/{id}`: Get a specific todo by ID
+- `GET /task`: Get all todos 
+- `POST /task`: Create a new todo
+- `PATCH /task/{id}`: Update an existing todo
+- `DELETE /task/{id}`: Delete a todo
+- `DELETE /tasks`: Delete all todo
 
 ## Technologies Used
 
@@ -55,5 +56,11 @@ The following API endpoints are available:
 - HTML
 - CSS
 
+## Additional Information
 
+- The application requires a MySQL database for storing the todo data.
+- You can configure the database connection settings in the `application.properties` file.
+- The application uses Maven as the build tool to manage dependencies and build the project.
+- The frontend of the application is built using JavaScript, HTML, and CSS.
+- Feel free to explore and modify the code to fit your needs.
 
