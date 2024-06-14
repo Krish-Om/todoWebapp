@@ -1,5 +1,5 @@
 class TaskService {
-  endpoint = "https://todowebapp-jhwg.onrender.com";
+  endpoint = "http://localhost:8080";
   async getAllTasks() {
     const url = this.endpoint + "/task";
     let response;
