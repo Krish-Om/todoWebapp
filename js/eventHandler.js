@@ -8,7 +8,6 @@ const fetchAll = () => {
     });
     displayTaskList(results);
   });
-  // console.log(taskList);
 };
 const fetchOne = (id) => {
   taskService.getTasksByTaskId(id).then((res) => {
@@ -88,7 +87,6 @@ const timeDisplay = () => {
   if (sec < 10) {
     sec = "0" + sec;
   }
-  // console.log(hr + ":" + min + ":" + sec)
   document.querySelector(".time").innerText =
     hr + ":" + min + ":" + sec + " " + period;
 };
@@ -109,7 +107,6 @@ const handleOnSubmit = (e) => {
     ) {
       const obj = {
         taskDetail: task,
-        // id: taskList.id,
         status: false,
       };
       taskList.push(obj);
@@ -121,7 +118,6 @@ const handleOnSubmit = (e) => {
   } catch (e) {
     throw new Error(e.message);
   }
-  // console.log(task);// user input text
 
   console.log(taskList);
 };
@@ -131,7 +127,6 @@ const displayTaskList = (results) => {
   const tableList = document.querySelector(".tableList");
 
   results.map((item) => {
-    // console.log(item.id);
     str += `
         <tr>
         <td>${item.id}
@@ -161,7 +156,6 @@ const handleOnClear = () => {
 
 const handleOnDel = (id) => {
   if (window.confirm("Are you sure you want to delete?")) {
-    // console.log(`current item id:${id}`);
     taskList = taskList.filter((item) => {
       if (item.id == id) {
         destroy(item.id);
@@ -178,7 +172,7 @@ const toggleTaskCompletion = (id) => {
   taskList = taskList.map((item) => {
     if (item.id == id) {
       update(id);
-      console.log(item.id)
+      console.log(item.id);
       return { ...item, isCompleted: !item.isCompleted };
     }
     return item;
