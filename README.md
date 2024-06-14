@@ -15,13 +15,13 @@ Before running the application, make sure you have the following installed:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/todo-app.git
+    git clone https://github.com/your-username/todoWebapp.git
     ```
 
 2. Navigate to the project directory:
 
     ```bash
-    cd todo-app
+    cd todo
     ```
 
 3. Build the application using Maven:
@@ -33,7 +33,7 @@ Before running the application, make sure you have the following installed:
 4. Run the application:
 
     ```bash
-    java -jar target/todo-app.jar
+    java -jar target/todo.jar
     ```
 
 5. Open your web browser and visit [http://localhost:8080](http://localhost:8080) to access the Todo App.
